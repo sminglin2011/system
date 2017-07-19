@@ -61,6 +61,7 @@ public class TingkatOrder implements Serializable{
 	private Boolean newCustomer;
 	private Boolean trial;
 	private Boolean nonContinue;
+	//can see here from web
 	
 	private String status;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
