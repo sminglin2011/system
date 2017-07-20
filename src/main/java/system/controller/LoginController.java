@@ -5,6 +5,7 @@ import java.applet.AppletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +14,15 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import system.WebSecurityConfig;
 import system.domain.user.SysUser;
+import system.domain.user.SysUserRepository;
 import system.tools.SessionUserListener;
 
 
 @Controller
 public class LoginController {
+	
+	@Autowired
+	private SysUserRepository userRepository;
 
 	@RequestMapping("/login")
 	public String loginPage(){
@@ -35,11 +40,11 @@ public class LoginController {
         	model.addAttribute("errorMsg", "User having Login, please sign out first!");
         	return "login";
         }else {
-        	if (user.getEmail().equals("sming") || user.getPassword().equals("sming")) {
+        	SysUser user1 = userRepository.findByUsernameOrEmail(email, email);
+        	if (user.getEmail().equals("sming") && user.getPassword().equals("sming") || 
+        			(user1.getPassword() == user.getPassword() || user1.getPassword().equals(user.getPassword()))) {
         		// 如果没有重复登录，则将该登录的用户信息添加入session中  
-//                request.getSession().setAttribute("sysUser", user); 
         		request.getSession().setAttribute(WebSecurityConfig.SESSION_KEY, user);
-//        		session.setAttribute(WebSecurityConfig.SESSION_KEY, user.getEmail());
                 // 比较保存所有用户session的静态变量中，是否含有当前session的键值映射，如果含有就删除  
                 if (SessionUserListener.containsKey(request.getSession().getId())) {  
                     SessionUserListener.removeSession(request.getSession().getId());  
@@ -47,7 +52,6 @@ public class LoginController {
                 //把当前用户封装的session按，sessionID和session进行键值封装，添加到静态变量map中。  
                 SessionUserListener.addUserSession(request.getSession());  
                 
-//        		return "redirect:/index";
                 return "redirect:index";
         	} else {
         		model.addAttribute("errorMsg", "email or password was wrong!");
@@ -59,10 +63,11 @@ public class LoginController {
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request) {
 		
-//		SysUser user = (SysUser)request.getSession().getAttribute("sysUser");
-//		System.out.println("what is it=????????= " + user.getEmail());
-//		SessionUserListener.removeUserSession(user.getEmail());
-		SessionUserListener.removeSession(request.getSession().getId());
+		System.out.println(request.getSession().getId() + "= seesio ID" + request.getSession().getAttribute("sysUser"));
+		SessionUserListener.removeSession(request.getSession().getId()); // this line still can access after logout
+		request.getSession().removeAttribute("sysUser");
+		System.out.println(request.getSession().getId() + "= seesio ID" + request.getSession().getAttribute("sysUser"));
+		
 		return "login";
 	}
 }

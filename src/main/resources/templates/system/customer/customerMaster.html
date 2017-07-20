@@ -51,7 +51,7 @@
 			<tbody>
 				<tr class="text-c" th:each="customer,iterStat : ${customerList}"> 
 				     <td><input type="checkbox" th:value="${customer.customerId}" name="customerId"></input></td>
-				     <td th:text="${customer.id}">id</td>
+				     <td th:text="${customer.customerId}">id</td>
 				     <td th:text="${customer.name}">name</td>
 				     <td th:text="${customer.attention}">Attention</td>
 				     <td th:text="${customer.mobile}">mobile</td>

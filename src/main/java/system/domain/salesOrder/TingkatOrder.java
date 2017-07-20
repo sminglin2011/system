@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -33,24 +34,26 @@ public class TingkatOrder implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "order_id", nullable = false)
-	@GeneratedValue
-	private Long orderId;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer orderId;
 	@Column(nullable=false, unique=true)
 	private String orderNumber;
 	
-	private Long postalCode;
+	private Integer postalCode;
 	private String address;
 	private String floor;
 	private String unit;
 	
-	@Column(name = "customer_id", insertable=false, updatable=false)
-	private Long customerId;
-//	@ManyToOne(cascade={CascadeType.ALL})
-//	@JoinColumn(name="customer_id")
-//	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
-	@ManyToOne(optional=false)
-    @JoinColumn(name="customer_id",referencedColumnName="customer_id")
+//	@Column(name = "customer_id", insertable=false, updatable=false)
+//	private Integer customerId;
+//	@ManyToOne(optional=false)
+//  @JoinColumn(name="customer_id",referencedColumnName="customer_id")
+	
+	/**
+	 * @ManyToOne(cascade=CascadeType.REFRESH,optional=true)中将属性optional设置为true，这可以使得即使外键为空时仍可以向表中添加数据。
+	 */
+	@ManyToOne(cascade=CascadeType.REFRESH, optional=true)
+	@JoinColumn(name="customer_id")
 	private Customer customer;
 	private String customerName;
 	private String attention;
@@ -59,7 +62,7 @@ public class TingkatOrder implements Serializable{
 	private String mealType;
 	private String packMethod;
 	private String weekdays;
-	private Long orderDays;
+	private Integer orderDays;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date startDate;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -75,13 +78,15 @@ public class TingkatOrder implements Serializable{
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date orderDate;
 	
-	@Column(name="menu_id", insertable=false, updatable=false)
-	private Long menuId;
-	@ManyToOne( optional=false)//(cascade={CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH})
-	@JoinColumn(name="menu_id", referencedColumnName="menu_id")
+//	@Column(name="menu_id", insertable=false, updatable=false)
+//	private Integer menuId;
+//	@ManyToOne( optional=false)//(cascade={CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH})
+//	@JoinColumn(name="menu_id", referencedColumnName="menu_id")
+	@ManyToOne(cascade=CascadeType.REFRESH, optional=true)
+	@JoinColumn(name="menu_id")
 	private ProductMenu productMenu;
 	private String menuName;
-	private Long noOfPax;
+	private Integer noOfPax;
 	@Column(columnDefinition="Double DEFAULT 0")
 	private Double pricePerPax;
 	@Column(columnDefinition="Double DEFAULT 0.00")
@@ -94,10 +99,12 @@ public class TingkatOrder implements Serializable{
 	@Column(columnDefinition="Decimal(10,2) DEFAULT 0")
 	private Double totalAmount;
 	
-	@Column(name="driver_id", insertable=false, updatable=false)
-	private Long driverId;
-	@ManyToOne(optional=false)//(cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	@JoinColumn(name="driver_id", referencedColumnName="driver_id")
+//	@Column(name="driver_id", insertable=false, updatable=false)
+//	private Integer driverId;
+//	@ManyToOne(optional=false)//(cascade={CascadeType.PERSIST,CascadeType.MERGE})
+//	@JoinColumn(name="driver_id", referencedColumnName="driver_id")
+	@ManyToOne(cascade=CascadeType.REFRESH, optional=true)
+	@JoinColumn(name="driver_id")
 	private DeliveryDriver driver;
 	@OneToMany
 	private List<PreSetRemark> preSetRemarks = new ArrayList<PreSetRemark>();
@@ -115,12 +122,6 @@ public class TingkatOrder implements Serializable{
 	}
 	public void setOrderNumber(String orderNumber) {
 		this.orderNumber = orderNumber;
-	}
-	public Long getPostalCode() {
-		return postalCode;
-	}
-	public void setPostalCode(Long postalCode) {
-		this.postalCode = postalCode;
 	}
 	public String getAddress() {
 		return address;
@@ -182,12 +183,6 @@ public class TingkatOrder implements Serializable{
 	public void setWeekdays(String weekdays) {
 		this.weekdays = weekdays;
 	}
-	public Long getOrderDays() {
-		return orderDays;
-	}
-	public void setOrderDays(Long orderDays) {
-		this.orderDays = orderDays;
-	}
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -236,12 +231,6 @@ public class TingkatOrder implements Serializable{
 	public void setMenuName(String menuName) {
 		this.menuName = menuName;
 	}
-	public Long getNoOfPax() {
-		return noOfPax;
-	}
-	public void setNoOfPax(Long noOfPax) {
-		this.noOfPax = noOfPax;
-	}
 	public Double getPricePerPax() {
 		return pricePerPax;
 	}
@@ -284,35 +273,46 @@ public class TingkatOrder implements Serializable{
 	public void setPreSetRemarks(List<PreSetRemark> preSetRemarks) {
 		this.preSetRemarks = preSetRemarks;
 	}
-	public Long getOrderId() {
+	public Integer getOrderId() {
 		return orderId;
 	}
-	public void setOrderId(Long orderId) {
+	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
-//	public Long getCustoemrId() {
-//		return custoemrId;
+	public Integer getPostalCode() {
+		return postalCode;
+	}
+	public void setPostalCode(Integer postalCode) {
+		this.postalCode = postalCode;
+	}
+//	public Integer getCustomerId() {
+//		return customerId;
 //	}
-//	public void setCustoemrId(Long custoemrId) {
-//		this.custoemrId = custoemrId;
+//	public void setCustomerId(Integer customerId) {
+//		this.customerId = customerId;
 //	}
-	public Long getCustomerId() {
-		return customerId;
+	public Integer getOrderDays() {
+		return orderDays;
 	}
-	public void setCustomerId(Long customerId) {
-		this.customerId = customerId;
+	public void setOrderDays(Integer orderDays) {
+		this.orderDays = orderDays;
 	}
-	public Long getDriverId() {
-		return driverId;
+//	public Integer getMenuId() {
+//		return menuId;
+//	}
+//	public void setMenuId(Integer menuId) {
+//		this.menuId = menuId;
+//	}
+	public Integer getNoOfPax() {
+		return noOfPax;
 	}
-	public void setDriverId(Long driverId) {
-		this.driverId = driverId;
+	public void setNoOfPax(Integer noOfPax) {
+		this.noOfPax = noOfPax;
 	}
-	public Long getMenuId() {
-		return menuId;
-	}
-	public void setMenuId(Long menuId) {
-		this.menuId = menuId;
-	}
-	
+//	public Integer getDriverId() {
+//		return driverId;
+//	}
+//	public void setDriverId(Integer driverId) {
+//		this.driverId = driverId;
+//	}
 }

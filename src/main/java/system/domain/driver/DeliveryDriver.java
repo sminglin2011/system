@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -23,9 +24,8 @@ public class DeliveryDriver implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name = "driver_id", nullable = false)
-	@GeneratedValue
-	private long driverId;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer driverId;
 	private String name;
 	@Column(nullable=false, unique=true)
 	private String vehicleNumber;
@@ -57,10 +57,10 @@ public class DeliveryDriver implements Serializable{
 	public void setTingkatOrders(List<TingkatOrder> tingkatOrders) {
 		this.tingkatOrders = tingkatOrders;
 	}
-	public long getDriverId() {
+	public Integer getDriverId() {
 		return driverId;
 	}
-	public void setDriverId(long driverId) {
+	public void setDriverId(Integer driverId) {
 		this.driverId = driverId;
 	}
 

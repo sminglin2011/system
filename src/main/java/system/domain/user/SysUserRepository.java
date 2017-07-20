@@ -2,7 +2,7 @@ package system.domain.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SysUserRepository extends JpaRepository<SysUser, Long>{
+public interface SysUserRepository extends JpaRepository<SysUser, Integer>{
 	
 	SysUser findByEmail(String email);
 

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.Data;
@@ -19,9 +20,8 @@ public class ProductMenu implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "menu_id", nullable = false)
-	@GeneratedValue
-	private Long menuId;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer menuId;
 	@Column(nullable=false, unique=true)
 	private String description;
 	public String getDescription() {
@@ -30,10 +30,10 @@ public class ProductMenu implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Long getMenuId() {
+	public Integer getMenuId() {
 		return menuId;
 	}
-	public void setMenuId(Long menuId) {
+	public void setMenuId(Integer menuId) {
 		this.menuId = menuId;
 	}
 	

@@ -104,10 +104,12 @@ public class SessionUserListener implements HttpSessionListener {
 		while (iter.hasNext()) {
 			String sessionId = iter.next();
 			HttpSession session = getSessionMap().get(sessionId);
-			SysUser sessionuser = (SysUser) session.getAttribute("sysUser");
-			if (sessionuser != null) {
-				if (sessionuser.getEmail().equals(user.getEmail())){
-					return true;
+			if (session != null) {
+				SysUser sessionuser = (SysUser) session.getAttribute("sysUser");
+				if (sessionuser != null) {
+					if (sessionuser.getEmail().equals(user.getEmail())){
+						return true;
+					}
 				}
 			}
 		}

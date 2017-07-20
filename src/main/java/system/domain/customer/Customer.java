@@ -3,13 +3,17 @@ package system.domain.customer;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.Data;
 import system.domain.salesOrder.TingkatOrder;
@@ -24,9 +28,8 @@ public class Customer implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "customer_id", nullable = false)
-	@GeneratedValue
-	private Long customerId;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer customerId;
 	@Column(nullable = false)
 	private String name;
 	private String email;
@@ -40,8 +43,11 @@ public class Customer implements Serializable{
 	private String floor;
 	private String unit;
 	
-	@OneToMany(mappedBy="customer", fetch=FetchType.EAGER)
-	public List<TingkatOrder> tingkatOrders = new ArrayList<TingkatOrder>();
+	@OneToMany(mappedBy="customer", fetch=FetchType.LAZY)
+	public Set<DeliveryAddress> deliveryAddress;
+	
+	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
+	public Set<TingkatOrder> tingkatOrders;
 	
 	public String getName() {
 		return name;
@@ -109,16 +115,22 @@ public class Customer implements Serializable{
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public Long getCustomerId() {
+	public Integer getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(Long customerId) {
+	public void setCustomerId(Integer customerId) {
 		this.customerId = customerId;
 	}
-	public List<TingkatOrder> getTingkatOrders() {
+	public Set<DeliveryAddress> getDeliveryAddress() {
+		return deliveryAddress;
+	}
+	public void setDeliveryAddress(Set<DeliveryAddress> deliveryAddress) {
+		this.deliveryAddress = deliveryAddress;
+	}
+	public Set<TingkatOrder> getTingkatOrders() {
 		return tingkatOrders;
 	}
-	public void setTingkatOrders(List<TingkatOrder> tingkatOrders) {
+	public void setTingkatOrders(Set<TingkatOrder> tingkatOrders) {
 		this.tingkatOrders = tingkatOrders;
 	}
 	

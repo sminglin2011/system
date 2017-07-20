@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.Data;
@@ -19,9 +20,8 @@ public class PreSetRemark implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "remark_id", nullable = false)
-	@GeneratedValue
-	private Long remarkId;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer remarkId;
 	@Column(nullable=false, unique=true)
 	private String description;
 	public String getDescription() {
@@ -30,10 +30,10 @@ public class PreSetRemark implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Long getRemarkId() {
+	public Integer getRemarkId() {
 		return remarkId;
 	}
-	public void setRemarkId(Long remarkId) {
+	public void setRemarkId(Integer remarkId) {
 		this.remarkId = remarkId;
 	}
 

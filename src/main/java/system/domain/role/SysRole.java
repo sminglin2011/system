@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -25,19 +26,18 @@ public class SysRole implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name = "role_id", nullable = false)
-	@GeneratedValue
-	private Long roleId;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer roleId;
 	@Column(nullable=false, unique=true)
 	private String name;
 	
 	/**
 	 * 一个角色有多个用户
 	 */
-//	@OneToMany(cascade={CascadeType.ALL})
-//    @JoinColumn(name="role_id")
-//	@OneToMany //只注释oneToMany会以关联表联系
-	@OneToMany(mappedBy="role", fetch=FetchType.EAGER)
+	/**
+     * @OneToMany 与 OneToOne相似的也用mappedBy
+     */
+	@OneToMany(mappedBy="role")//OneToMany指定了一对多的关系，mappedBy="role"指定了由多的那一方来维护关联关系，mappedBy指的是多的一方对1的这一方的依赖的属性，(注意：如果没有指定由谁来维护关联关系，则系统会给我们创建一张中间表)
 	private Collection<SysUser> sysUsers = new ArrayList<SysUser>();
 
 	public String getName() {
@@ -56,11 +56,11 @@ public class SysRole implements Serializable{
 		this.sysUsers = sysUsers;
 	}
 
-	public Long getRoleId() {
+	public Integer getRoleId() {
 		return roleId;
 	}
 
-	public void setRoleId(Long roleId) {
+	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
 }

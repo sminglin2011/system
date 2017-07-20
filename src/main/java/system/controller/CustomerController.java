@@ -36,7 +36,7 @@ public class CustomerController {
 	public String addCustomer(String id, Model model){
 		Customer customer = new Customer();
 		if(id != null && !id.equals("0")){
-			customer = customerRepository.findOne(Long.valueOf(id));
+			customer = customerRepository.findOne(Integer.valueOf(id));
 		}
 		model.addAttribute("customer", customer);
 		return "system/customer/addCustomer";
@@ -58,13 +58,13 @@ public class CustomerController {
 	public AjaxResponseBody deleteCustomer(String ids, HttpServletResponse response){
 		System.out.println("--------------ids="+ids);
 		String[] tempId = ids.split(",");
-		Long[] arrayId = new Long[tempId.length];
+		Integer[] arrayId = new Integer[tempId.length];
 		
 		for(int i=0;i<tempId.length;i++){
 			System.out.println(tempId[i]);
-			arrayId[i]=Long.valueOf(tempId[i]);
+			arrayId[i]=Integer.valueOf(tempId[i]);
 		}
-		List<Long> idList = new ArrayList<Long>();
+		List<Integer> idList = new ArrayList<Integer>();
 		idList = java.util.Arrays.asList(arrayId);// 字符数组转lis
 		Iterable<Customer> mes = customerRepository.findAll(idList);
 		try {

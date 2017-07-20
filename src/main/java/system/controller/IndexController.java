@@ -12,6 +12,11 @@ import system.domain.user.SysUser;
 @Controller
 public class IndexController {
 
+	@RequestMapping("/")
+	public String index1(@SessionAttribute(WebSecurityConfig.SESSION_KEY) SysUser sysUser, Model model){
+		//model.addAttribute("name", "sming");
+		return "redirect:index";
+	}
 	@RequestMapping("/index")
 	public String index(@SessionAttribute(WebSecurityConfig.SESSION_KEY) SysUser sysUser, Model model){
 		//model.addAttribute("name", "sming");

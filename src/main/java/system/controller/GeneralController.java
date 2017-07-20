@@ -60,7 +60,7 @@ public class GeneralController {
 		System.out.println("id="+id);
 		ProductMenu menu = new ProductMenu();
 		if(id != null && !id.equals("0")){
-			menu = productMenuRepository.findOne(Long.valueOf(id));
+			menu = productMenuRepository.findOne(Integer.valueOf(id));
 		}
 		model.addAttribute("menu", menu);
 		return "system/addProductMenu";
@@ -84,13 +84,13 @@ public class GeneralController {
 	public AjaxResponseBody deleteProductMenu(String ids, HttpServletResponse response){
 		System.out.println("--------------ids="+ids);
 		String[] tempId = ids.split(",");
-		Long[] arrayId = new Long[tempId.length];
+		Integer[] arrayId = new Integer[tempId.length];
 		
 		for(int i=0;i<tempId.length;i++){
 			System.out.println(tempId[i]);
-			arrayId[i]=Long.valueOf(tempId[i]);
+			arrayId[i]=Integer.valueOf(tempId[i]);
 		}
-		List<Long> idList = new ArrayList<Long>();
+		List<Integer> idList = new ArrayList<Integer>();
 		idList = java.util.Arrays.asList(arrayId);// 字符数组转lis
 		Iterable<ProductMenu> mes = productMenuRepository.findAll(idList);
 		try {
@@ -116,7 +116,7 @@ public class GeneralController {
 		System.out.println("id="+id);
 		PreSetRemark remark = new PreSetRemark();
 		if(id != null && !id.equals("0")){
-			remark = preSetRemarkRepository.findOne(Long.valueOf(id));
+			remark = preSetRemarkRepository.findOne(Integer.valueOf(id));
 		}
 		model.addAttribute("remark", remark);
 		return "system/addPreSetRemark";
@@ -138,13 +138,13 @@ public class GeneralController {
 	@ResponseBody
 	public AjaxResponseBody deletePreSetRemark(String ids, HttpServletResponse response){
 		String[] tempId = ids.split(",");
-		Long[] arrayId = new Long[tempId.length];
+		Integer[] arrayId = new Integer[tempId.length];
 		
 		for(int i=0;i<tempId.length;i++){
 			System.out.println(tempId[i]);
-			arrayId[i]=Long.valueOf(tempId[i]);
+			arrayId[i]=Integer.valueOf(tempId[i]);
 		}
-		List<Long> idList = new ArrayList<Long>();
+		List<Integer> idList = new ArrayList<Integer>();
 		idList = java.util.Arrays.asList(arrayId);// 字符数组转lis
 		Iterable<PreSetRemark> mes = preSetRemarkRepository.findAll(idList);
 		try {

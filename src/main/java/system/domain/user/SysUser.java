@@ -15,11 +15,15 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 import system.domain.role.SysRole;
@@ -41,16 +45,21 @@ public class SysUser implements Serializable{
 		this.password = password;
 	}
 	@Id
-	@Column(name = "user_id", nullable = false)
-	@GeneratedValue
-	private Long userId;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer userId;
 	@Column(nullable=false, unique=true)
 	private String email;
 	private String username;
 	private String password;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date joinDate;
 	
-	@ManyToOne(cascade={ CascadeType.ALL })
+	/**
+     * @ManyToOne：多对一,cascade：级联
+      * fetch = FetchType.LAZY,延迟加载策略,如果不想延迟加载可以用FetchType.EAGER
+      * ManyToOne指定了多对一的关系，fetch=FetchType.LAZY属性表示在多的那一方通过延迟加载的方式加载对象(默认不是延迟加载)
+     */
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JoinColumn(name="role_id")
 	private SysRole role;
 	/**
@@ -89,10 +98,10 @@ public class SysUser implements Serializable{
 	public void setRole(SysRole role) {
 		this.role = role;
 	}
-	public Long getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
-	public void setUserId(Long userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 }
