@@ -19,15 +19,15 @@ public class TingKatTools {
     private static final FieldPosition HELPER_POSITION = new FieldPosition(0);
 
     /** This Format for format the data to special format. */
-    private final static Format dateFormat = new SimpleDateFormat("yyyyMMddHHmmssS");
+    private final static Format dateFormat = new SimpleDateFormat("yyMMddHHmmssS");
 
     /** This Format for format the number to special format. */
-    private final static NumberFormat numberFormat = new DecimalFormat("0000");
+    private final static NumberFormat numberFormat = new DecimalFormat("00");
 
     /** This int is the sequence number ,the default value is 0. */
     private static int seq = 0;
 
-    private static final int MAX = 9999;
+    private static final int MAX = 99;
 
     /**
      * 时间格式生成序列

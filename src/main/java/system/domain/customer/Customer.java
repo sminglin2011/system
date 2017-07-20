@@ -1,13 +1,18 @@
 package system.domain.customer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.Data;
+import system.domain.salesOrder.TingkatOrder;
 
 @Data
 @Entity
@@ -19,8 +24,9 @@ public class Customer implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name = "customer_id", nullable = false)
 	@GeneratedValue
-	private Long id;
+	private Long customerId;
 	@Column(nullable = false)
 	private String name;
 	private String email;
@@ -29,13 +35,14 @@ public class Customer implements Serializable{
 	private String mobile;
 	private String fax;
 	private String billingAddress;
+	private String address;
 	private String postalCode;
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+	private String floor;
+	private String unit;
+	
+	@OneToMany(mappedBy="customer", fetch=FetchType.EAGER)
+	public List<TingkatOrder> tingkatOrders = new ArrayList<TingkatOrder>();
+	
 	public String getName() {
 		return name;
 	}
@@ -83,6 +90,36 @@ public class Customer implements Serializable{
 	}
 	public void setBillingAddress(String billingAddress) {
 		this.billingAddress = billingAddress;
+	}
+	public String getFloor() {
+		return floor;
+	}
+	public void setFloor(String floor) {
+		this.floor = floor;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public Long getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
+	}
+	public List<TingkatOrder> getTingkatOrders() {
+		return tingkatOrders;
+	}
+	public void setTingkatOrders(List<TingkatOrder> tingkatOrders) {
+		this.tingkatOrders = tingkatOrders;
 	}
 	
 }

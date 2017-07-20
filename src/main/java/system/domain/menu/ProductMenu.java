@@ -19,21 +19,22 @@ public class ProductMenu implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name = "menu_id", nullable = false)
 	@GeneratedValue
-	private Long id;
+	private Long menuId;
 	@Column(nullable=false, unique=true)
 	private String description;
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public String getDescription() {
 		return description;
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public Long getMenuId() {
+		return menuId;
+	}
+	public void setMenuId(Long menuId) {
+		this.menuId = menuId;
 	}
 	
 }

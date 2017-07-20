@@ -7,6 +7,7 @@ import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -24,8 +25,9 @@ public class SysRole implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
+	@Column(name = "role_id", nullable = false)
 	@GeneratedValue
-	private Long id;
+	private Long roleId;
 	@Column(nullable=false, unique=true)
 	private String name;
 	
@@ -34,16 +36,9 @@ public class SysRole implements Serializable{
 	 */
 //	@OneToMany(cascade={CascadeType.ALL})
 //    @JoinColumn(name="role_id")
-	@OneToMany //只注释oneToMany会以关联表联系
+//	@OneToMany //只注释oneToMany会以关联表联系
+	@OneToMany(mappedBy="role", fetch=FetchType.EAGER)
 	private Collection<SysUser> sysUsers = new ArrayList<SysUser>();
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -59,5 +54,13 @@ public class SysRole implements Serializable{
 
 	public void setSysUsers(Collection<SysUser> sysUsers) {
 		this.sysUsers = sysUsers;
+	}
+
+	public Long getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
 	}
 }

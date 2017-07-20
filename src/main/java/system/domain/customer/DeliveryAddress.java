@@ -3,6 +3,7 @@ package system.domain.customer;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,8 +21,9 @@ public class DeliveryAddress implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name = "address_id", nullable = false)
 	@GeneratedValue
-	private Long id;
+	private Long addressId;
 	private String address;
 	private String postalCode;
 	private String attention;
@@ -29,12 +31,7 @@ public class DeliveryAddress implements Serializable{
 	@ManyToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="customer_id")
 	private Customer customer;
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+	
 	public String getAddress() {
 		return address;
 	}
@@ -64,5 +61,11 @@ public class DeliveryAddress implements Serializable{
 	}
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+	public Long getAddressId() {
+		return addressId;
+	}
+	public void setAddressId(Long addressId) {
+		this.addressId = addressId;
 	}
 }

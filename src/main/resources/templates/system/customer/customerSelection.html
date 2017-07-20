@@ -44,7 +44,7 @@
 			</thead>
 			<tbody>
 				<tr class="text-c" th:each="customer,iterStat : ${customerList}"> 
-				     <td><input type="checkbox" th:value="${customer.id}" name="id"></input></td>
+				     <td><input type="checkbox" th:value="${customer.customerId}" name="customerId"></input></td>
 				     <td id="id" th:text="${customer.id}">id</td>
 				     <td id="name" th:text="${customer.name}">name</td>
 				     <td id="attention" th:text="${customer.attention}">Attention</td>
@@ -53,7 +53,7 @@
 				     <td th:text="${customer.fax}">fax</td>
 				     <td th:text="${customer.email}">email</td>
 				     <td class="f-14 td-manage">
-				     <a class="btn btn-primary size-S radius" th:onclick="'javascript:customer_select(this,'+${customer.id}+');'" href="javascript:;" title="选择">Select</a>
+				     <a class="btn btn-primary size-S radius" th:onclick="'javascript:customer_select(this,'+${customer.icustomerId}+');'" href="javascript:;" title="选择">Select</a>
 				     </td>
 				 </tr>
 			</tbody>
@@ -87,7 +87,7 @@ function customer_select(obj,id){
 	var $customerName=$(obj).parents('tr').children('td:nth-child(3)');
 	var $attention=$(obj).parents('tr').children('td:nth-child(4)');
 	var $mobile=$(obj).parents('tr').children('td:nth-child(5)');
-	parent.$('#id').val($id.html());
+	parent.$('#customerId').val($id.html());
 	parent.$('#customerName').val($customerName.html());
 	parent.$('#attention').val($attention.html());
 	parent.$('#mobile').val($mobile.html());

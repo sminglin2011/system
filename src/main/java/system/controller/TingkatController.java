@@ -22,6 +22,7 @@ import system.domain.menu.ProductMenuRepository;
 import system.domain.salesOrder.TingkatOrder;
 import system.domain.salesOrder.TingkatOrderRepository;
 import system.tools.AjaxResponseBody;
+import system.tools.SystemConstant;
 import system.tools.TingKatTools;
 
 @Controller
@@ -61,12 +62,15 @@ public class TingkatController {
 			//Order number 为 null, 新建 TingKat Order
 			if(tingkat.getOrderNumber() == null) {
 				//获取 Order Number
+				tingkat.setStatus(SystemConstant.ORDER_STATUS_O);
+				log.debug("customer id = " + tingkat.getCustomer().getCustomerId());
 				tingkat.setOrderNumber(TingKatTools.generateSequenceNo());
 			}
-			tingkatRepository.save(tingkat);
+			tingkatRepository.saveAndFlush(tingkat);
 		} catch (Exception e) {
 			System.out.println("error="+ e.getMessage());
 			log.error("error-log=" + e.getMessage());
+			log.debug("on error customer id = " + tingkat.getCustomer().getCustomerId());
 			result.setResult(false);
 			result.setMsg(e.getMessage());
 		}

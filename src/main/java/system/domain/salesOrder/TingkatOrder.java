@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -32,8 +33,9 @@ public class TingkatOrder implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@Column(name = "order_id", nullable = false)
 	@GeneratedValue
-	private Long id;
+	private Long orderId;
 	@Column(nullable=false, unique=true)
 	private String orderNumber;
 	
@@ -42,13 +44,18 @@ public class TingkatOrder implements Serializable{
 	private String floor;
 	private String unit;
 	
-	@ManyToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	@JoinColumn(name="customer_id")
+	@Column(name = "customer_id", insertable=false, updatable=false)
+	private Long customerId;
+//	@ManyToOne(cascade={CascadeType.ALL})
+//	@JoinColumn(name="customer_id")
+//	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+	@ManyToOne(optional=false)
+    @JoinColumn(name="customer_id",referencedColumnName="customer_id")
 	private Customer customer;
 	private String customerName;
 	private String attention;
 	private String mobile;
-	
+		
 	private String mealType;
 	private String packMethod;
 	private String weekdays;
@@ -62,43 +69,47 @@ public class TingkatOrder implements Serializable{
 	private Boolean trial;
 	private Boolean nonContinue;
 	//can see here from web
-	
+	@Column(columnDefinition="varchar(10) DEFAULT 'O'")
 	private String status;
+	@Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date orderDate;
 	
-	@ManyToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	@JoinColumn(name="product_menu_id")
+	@Column(name="menu_id", insertable=false, updatable=false)
+	private Long menuId;
+	@ManyToOne( optional=false)//(cascade={CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH})
+	@JoinColumn(name="menu_id", referencedColumnName="menu_id")
 	private ProductMenu productMenu;
 	private String menuName;
 	private Long noOfPax;
+	@Column(columnDefinition="Double DEFAULT 0")
 	private Double pricePerPax;
+	@Column(columnDefinition="Double DEFAULT 0.00")
 	private Double subTotalAmount;
 	
-	
+	@Column(columnDefinition="Decimal(10,2) DEFAULT 0.00")
 	private Double additionalRice;
+	@Column(columnDefinition="Decimal(10,2) DEFAULT 0")
 	private Double riceAmount;
+	@Column(columnDefinition="Decimal(10,2) DEFAULT 0")
 	private Double totalAmount;
 	
-	
+	@Column(name="driver_id", insertable=false, updatable=false)
+	private Long driverId;
+	@ManyToOne(optional=false)//(cascade={CascadeType.PERSIST,CascadeType.MERGE})
+	@JoinColumn(name="driver_id", referencedColumnName="driver_id")
 	private DeliveryDriver driver;
 	@OneToMany
 	private List<PreSetRemark> preSetRemarks = new ArrayList<PreSetRemark>();
 	
-	
-	@Column(columnDefinition="O",nullable=false)
+	@Column(name="status",  columnDefinition="O")
 	public String getStatus() {
 		return status;
 	}
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+	
 	public String getOrderNumber() {
 		return orderNumber;
 	}
@@ -231,35 +242,30 @@ public class TingkatOrder implements Serializable{
 	public void setNoOfPax(Long noOfPax) {
 		this.noOfPax = noOfPax;
 	}
-	@Column(columnDefinition="0")
 	public Double getPricePerPax() {
 		return pricePerPax;
 	}
 	public void setPricePerPax(Double pricePerPax) {
 		this.pricePerPax = pricePerPax;
 	}
-	@Column(columnDefinition="0")
 	public Double getSubTotalAmount() {
 		return subTotalAmount;
 	}
 	public void setSubTotalAmount(Double subTotalAmount) {
 		this.subTotalAmount = subTotalAmount;
 	}
-	@Column(columnDefinition="0")
 	public Double getAdditionalRice() {
 		return additionalRice;
 	}
 	public void setAdditionalRice(Double additionalRice) {
 		this.additionalRice = additionalRice;
 	}
-	@Column(columnDefinition="0")
 	public Double getRiceAmount() {
 		return riceAmount;
 	}
 	public void setRiceAmount(Double riceAmount) {
 		this.riceAmount = riceAmount;
 	}
-	@Column(columnDefinition="0")
 	public Double getTotalAmount() {
 		return totalAmount;
 	}
@@ -277,6 +283,36 @@ public class TingkatOrder implements Serializable{
 	}
 	public void setPreSetRemarks(List<PreSetRemark> preSetRemarks) {
 		this.preSetRemarks = preSetRemarks;
+	}
+	public Long getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
+	}
+//	public Long getCustoemrId() {
+//		return custoemrId;
+//	}
+//	public void setCustoemrId(Long custoemrId) {
+//		this.custoemrId = custoemrId;
+//	}
+	public Long getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
+	}
+	public Long getDriverId() {
+		return driverId;
+	}
+	public void setDriverId(Long driverId) {
+		this.driverId = driverId;
+	}
+	public Long getMenuId() {
+		return menuId;
+	}
+	public void setMenuId(Long menuId) {
+		this.menuId = menuId;
 	}
 	
 }

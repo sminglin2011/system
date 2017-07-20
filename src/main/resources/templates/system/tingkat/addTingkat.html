@@ -28,7 +28,10 @@
 	<form method="post" class="form form-horizontal" id="form-add-tingkat">
 		<div class="row cl">
 			<div class="formControls col-xs-2 col-sm-2">
-				<input type="text" class="input-text disabled" disabled="disabled" value="" placeholder="OrderNumber" id="" name=""></input>
+				<input type="text" class="input-text disabled" disabled="disabled" value="" placeholder="OrderNumber" id="orderNumber" name="orderNumber"></input>
+			</div>
+			<div class="formControls col-xs-1 col-sm-1">
+				<input type="text" class="input-text disabled" readonly="readonly" value="" placeholder="Status" id="status" name="status"></input>
 			</div>
 		</div>
 		<div class="row cl">
@@ -53,7 +56,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2">
 				<input type="button" class="btn btn-primary-outline radius" value="Client" onclick="customerSelection();"></input>
-				<input type="hidden" class="" id="customerId" name="customer.id"></input>
+				<input type="hidden" class="" id="customerId" name="customerId"></input>
 				
 			</label>
 			<div class="formControls col-xs-2 col-sm-2">
@@ -168,8 +171,8 @@
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-blue">Menu:</span></label>
 			<div class="formControls col-xs-9 col-sm-9">
 				<div class="radio-box" th:each="menu,iterStat : ${menuList}">
-					<input type="radio" th:id = "menuName+(${menu.id})" name="menuName" th:value="${menu.description}"></input>
-					<label th:attr="for=menuName+(${menu.id})" th:text="${menu.description}">3 Dish</label>
+					<input type="radio" th:id = "menuName+(${menu.menuId})" name="menuName" th:value="${menu.description}"></input>
+					<label th:attr="for=menuName+(${menu.menuId})" th:text="${menu.description}">3 Dish</label>
 				</div>
 			</div>
 		</div>
@@ -295,9 +298,9 @@ $(function(){
 				minlength:6,
 				maxlength:6
 			},
-			mobile:{
+			/* mobile:{
 				required:true
-			},
+			}, */
 		},
 		onkeyup:false,
 		focusCleanup:true,

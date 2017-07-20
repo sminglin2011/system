@@ -69,7 +69,7 @@ public class GeneralController {
 	@RequestMapping("/productMenu/saveProductMenu")
 	@ResponseBody
 	public AjaxResponseBody saveProductMenu(ProductMenu menu, HttpServletResponse response){
-		System.out.println(menu + "--------------description="+menu.getDescription() + "-" + menu.getId());
+		System.out.println(menu + "--------------description="+menu.getDescription() + "-" + menu.getMenuId());
 		try {
 			productMenuRepository.save(menu);
 		} catch (DataIntegrityViolationException e) {

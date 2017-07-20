@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -22,21 +23,16 @@ public class DeliveryDriver implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
+	@Column(name = "driver_id", nullable = false)
 	@GeneratedValue
-	private long id;
+	private long driverId;
 	private String name;
 	@Column(nullable=false, unique=true)
 	private String vehicleNumber;
 	private String contactNumber;
-	@OneToMany
+	@OneToMany(mappedBy="driver", targetEntity=TingkatOrder.class, fetch=FetchType.LAZY)
 	private List<TingkatOrder> tingkatOrders = new ArrayList<TingkatOrder>();
 	
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
 	public String getName() {
 		return name;
 	}
@@ -60,6 +56,12 @@ public class DeliveryDriver implements Serializable{
 	}
 	public void setTingkatOrders(List<TingkatOrder> tingkatOrders) {
 		this.tingkatOrders = tingkatOrders;
+	}
+	public long getDriverId() {
+		return driverId;
+	}
+	public void setDriverId(long driverId) {
+		this.driverId = driverId;
 	}
 
 }
