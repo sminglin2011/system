@@ -45,7 +45,7 @@
 			</thead>
 			<tbody>
 				<tr class="text-c" th:each="collect,iterStat : ${remarkList}"> 
-				     <td><input type="checkbox" th:value="${collect.remarkId}" name="remarkId"></input></td>
+				     <td><input type="checkbox" th:value="${collect.remarkId}" name="id"></input></td>
 				     <td th:text="${collect.remarkId}">id</td>
 				     <td th:text="${collect.description}">description</td>
 				     <td class="f-14 td-manage">

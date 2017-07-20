@@ -27,50 +27,49 @@
 <article class="page-container">
 	<form method="post" class="form form-horizontal" id="form-add-tingkat">
 		<div class="row cl">
-			<div class="formControls col-xs-2 col-sm-2">
-				<input type="text" class="input-text disabled" disabled="disabled" value="" placeholder="OrderNumber" id="orderNumber" name="orderNumber"></input>
-			</div>
-			<div class="formControls col-xs-1 col-sm-1">
-				<input type="text" class="input-text disabled" readonly="readonly" value="" placeholder="Status" id="status" name="status"></input>
+			<div class="formControls col-xs-3 col-sm-3">
+				<input type="hidden" th:field="*{tingkat.orderId}"></input>
+				<input type="hidden" th:field="*{tingkat.status}"></input>
+				<input type="text" class="input-text disabled" readonly="readonly" th:field="*{tingkat.orderNumber}" placeholder="OrderNumber" id="" name=""></input>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-blue">Postal:</span></label>
 			<div class="formControls col-xs-2 col-sm-2">
-				<input type="text" class="input-text" value="" placeholder="Postal Code" id="postalCode" name="postalCode"></input>
+				<input type="text" class="input-text" th:field="*{tingkat.postalCode}" placeholder="Postal Code" id="postalCode" name="postalCode"></input>
 			</div>
 			
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-blue">Address:</span></label>
 			<div class="formControls col-xs-2 col-sm-2">
-				<input type="text" class="input-text" value="" placeholder="Address" id="address" name="address"></input>
+				<input type="text" class="input-text" th:field="*{tingkat.address}" placeholder="Address" id="address" name="address"></input>
 			</div>
 			
 			<label class="form-label col-xs-1 col-sm-2"><span class="c-blue">Floor<span class="pipe">|</span>Unit:</span></label>
 			<div class="formControls col-xs-1 col-sm-1">
-				<input type="text" class="input-text" value="" placeholder="Floor" id="floor" name="floor"></input>
+				<input type="text" class="input-text" th:field="*{tingkat.floor}" placeholder="Floor" id="floor" name="floor"></input>
 			</div>
 			<div class="formControls col-xs-1 col-sm-1">
-				<input type="text" class="input-text" value="" placeholder="Unit" id="unit" name="unit"></input>
+				<input type="text" class="input-text" th:field="*{tingkat.unit}" placeholder="Unit" id="unit" name="unit"></input>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2">
 				<input type="button" class="btn btn-primary-outline radius" value="Client" onclick="customerSelection();"></input>
-				<input type="hidden" class="" id="customerId" name="customer.customerId"></input>
+				<input type="hidden" th:field="*{tingkat.customer.customerId}" id="customerId" name="customer.id"></input>
 				
 			</label>
 			<div class="formControls col-xs-2 col-sm-2">
-				<input type="text" class="input-text" value="" placeholder="Client Name" id="customerName" name="customerName"></input>
+				<input type="text" class="input-text" th:field="*{tingkat.customerName}" placeholder="Client Name" id="customerName" name="customerName"></input>
 			</div>
 			
 			<label class="form-label col-xs-1 col-sm-2"><span class="c-blue">Attention:</span></label>
 			<div class="formControls col-xs-2 col-sm-2">
-				<input type="text" class="input-text" value="" placeholder="Attention" id="attention" name="attention"></input>
+				<input type="text" class="input-text" th:field="*{tingkat.attention}" placeholder="Attention" id="attention" name="attention"></input>
 			</div>
 			
 			<label class="form-label col-xs-1 col-sm-1"><span class="c-blue">Mobile:</span></label>
 			<div class="formControls col-xs-2 col-sm-2">
-				<input type="text" class="input-text" value="" placeholder="Mobile" id="mobile" name="mobile"></input>
+				<input type="text" class="input-text" th:field="*{tingkat.mobile}" placeholder="Mobile" id="mobile" name="mobile"></input>
 			</div>
 		</div>
 		<div class="line mt-10"></div>
@@ -78,8 +77,8 @@
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-blue">Meal Type:</span></label>
 			<div class="formControls col-xs-2 col-sm-2">
 				<span class="select-box">
-				<select class="select" id="mealType" name="mealType">
-					<option>--Select--</option>
+				<select class="select" th:field="*{tingkat.mealType}" id="mealType" name="mealType"> <!--  th:remove="all-but-first" -->
+					<option value="">-- select --</option>
 					<option value="lunch">Lunch</option>
 					<option value="dinner">Dinner</option>
 				</select>
@@ -89,12 +88,12 @@
 			<label class="form-label col-xs-1 col-sm-1"><span class="c-blue">Packing:</span></label>
 			<div class="formControls col-xs-3 col-sm-3">
 				<div class="radio-box">
-					<input type="radio" id="packMethod1" name="packMethod" value="tingkat" checked="checked"></input>
-					<label for="packMethod1">TingKat</label>
+					<input type="radio" id="packMethod1" name="packMethod" value="tingkat" th:field="*{tingkat.packMethod}"></input>
+					<label for="packMethod1"><span class="c-red">TingKat</span></label>
 				</div>
 				<div class="radio-box">
-					<input type="radio" id="packMethod2" name="packMethod" value="box"></input>
-					<label for="packMethod2">Box</label>
+					<input type="radio" id="packMethod2" name="packMethod" value="box" th:field="*{tingkat.packMethod}"></input>
+					<label for="packMethod2"><span class="c-red">Box</span></label>
 				</div>
 			</div>
 		</div>
@@ -102,7 +101,7 @@
 			<label class="form-label col-xs-2 col-sm-2 capitalize"><span class="c-blue">Weekdays:</span></label>
 			<div class="formControls col-xs-9 col-sm-9">
 				<div class="skin-minimal weekdays">
-				<input type="hidden" id="weekdays" name="weekdays" value=""></input>
+				<input type="hidden" id="weekdays" name="weekdays" th:field="*{tingkat.weekdays}"></input>
 				<div class="check-box">
 					<input type="checkbox" id="monday" value="1"></input>
 					<label for="monday">Monday</label>
@@ -137,31 +136,31 @@
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-blue">Order Days:</span></label>
 			<div class="formControls col-xs-1 col-sm-1">
-				<input type="text" class="input-text" value="" placeholder="20" id="orderDays" name="orderDays"></input>
+				<input type="text" class="input-text" th:field="*{tingkat.orderDays}" placeholder="20" id="orderDays" name="orderDays"></input>
 			</div>
 			
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-blue">Start Date:</span></label>
 			<div class="formControls col-xs-2 col-sm-2">
-				<input type="text" class="input-text" value="" onfocus="WdatePicker()" placeholder="2017-09-10" id="startDate" name="startDate"></input>
+				<input type="text" class="input-text" th:field="*{tingkat.startDate}" onfocus="WdatePicker()" placeholder="2017-09-10" id="startDate" name="startDate"></input>
 			</div>
 			<label class="form-label col-xs-2 col-sm-2" >End Date:</label>
 			<div class="formControls col-xs-2 col-sm-2">
-				<input type="text" class="input-text disabled" disabled="disabled" value="" placeholder="" id="endDate" name="endDate"></input>
+				<input type="text" class="input-text disabled" disabled="disabled" th:field="*{tingkat.endDate}" placeholder="" id="endDate" name="endDate"></input>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2" ></label>
 			<div class="formControls col-xs-9 col-sm-9">
 				<div class="check-box">
-					<input type="checkbox" id="trial" name="trial"></input>
+					<input type="checkbox" id="trial" name="trial" th:field="*{tingkat.trial}"></input>
 					<label for="trial"><span class="c-blue">Trial</span></label>
 				</div>
 				<div class="check-box">
-					<input type="checkbox" id="newCustomer" name="newCustomer"></input>
+					<input type="checkbox" id="newCustomer" name="newCustomer" th:field="*{tingkat.newCustomer}"></input>
 					<label for="newCustomer"><span class="c-blue">New Client</span></label>
 				</div>
 				<div class="check-box">
-					<input type="checkbox" id="nonContinue" name="nonContinue"></input>
+					<input type="checkbox" id="nonContinue" name="nonContinue" th:field="*{tingkat.nonContinue}"></input>
 					<label for="nonContinue"><span class="c-blue">Non Continue</span></label>
 				</div>
 			</div>
@@ -171,46 +170,46 @@
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-blue">Menu:</span></label>
 			<div class="formControls col-xs-9 col-sm-9">
 				<div class="radio-box" th:each="menu,iterStat : ${menuList}">
-					<input type="radio" th:id = "menuName+(${menu.menuId})" name="productMenu.menuId" th:value="${menu.menuId}"></input>
-					<label th:attr="for=menuName+(${menu.menuId})" th:text="${menu.description}">3 Dish</label>
+					<input type="radio" th:value="${menu.menuId}" th:id="'menu'+${menu.menuId}" name="menuName" th:field="${tingkat.productMenu.menuId}"></input>
+					<label th:for="'menu'+${menu.menuId}" th:text="${menu.description}">3 Dish</label>
 				</div>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-blue">No. Of PAX:</span></label>
 			<div class="formControls col-xs-1 col-sm-1">
-				<input type="text" class="input-text" value="" placeholder="No.Of Pax" id="noOfPax" name="noOfPax"></input>
+				<input type="text" class="input-text" th:field="*{tingkat.noOfPax}" placeholder="No.Of Pax" id="noOfPax" name="noOfPax"></input>
 			</div>
 			<div class="formControls col-xs-2 col-sm-2">
 				<div class="check-box">
-					<input type="checkbox" id="withRice" name="withRice"></input>
+					<input type="checkbox" id="withRice" name="withRice" th:field="*{tingkat.withRice}"></input>
 					<label for="withRice"><span class="c-blue">With Rice</span></label>
 				</div>
 			</div>
 			
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-blue">UnitPrice Per Pax:</span></label>
 			<div class="formControls col-xs-1 col-sm-1">
-				<input type="text" class="input-text" value="" placeholder="Unit Price" id="pricePerPax" name="pricePerPax"></input>
+				<input type="text" class="input-text" th:field="*{tingkat.pricePerPax}" placeholder="Unit Price" id="pricePerPax" name="pricePerPax"></input>
 			</div>
 			
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-blue">Amount:</span></label>
 			<div class="formControls col-xs-1 col-sm-1">
-				<input type="text" class="input-text" value="" placeholder="" id="amount" name="subTotalAmount"></input>
+				<input type="text" class="input-text" th:field="*{tingkat.subTotalAmount}" placeholder="" id="amount" name="subTotalAmount"></input>
 			</div>
 		</div>
 		
 		<div class="row cl">
 			<label class="form-label col-xs-2 col-sm-2"><span class="c-blue">Additional Rice:</span></label>
 			<div class="formControls col-xs-1 col-sm-1">
-				<input type="text" class="input-text" value="" placeholder="0" id="additionalRice" name="additionalRice"></input>
+				<input type="text" class="input-text" th:field="*{tingkat.additionalRice}" placeholder="0" id="additionalRice" name="additionalRice"></input>
 			</div>
 			<div class="formControls col-xs-1 col-sm-1">
-				<input type="text" class="input-text" value="" placeholder="Add. Rice Amount" id="riceAmount" name="riceAmount"></input>
+				<input type="text" class="input-text" th:field="*{tingkat.riceAmount}" placeholder="Add. Rice Amount" id="riceAmount" name="riceAmount"></input>
 			</div>
 			
 			<label class="form-label col-xs-2 col-sm-2">Total Amount:</label>
 			<div class="formControls col-xs-1 col-sm-1">
-				<input type="text" class="input-text disabled" disabled="disabled" value="" placeholder="Amount" id="totalAmount" name="totalAmount"></input>
+				<input type="text" class="input-text disabled" disabled="disabled" th:field="*{tingkat.totalAmount}" placeholder="Amount" id="totalAmount" name="totalAmount"></input>
 			</div>
 		</div>
 		
@@ -298,9 +297,32 @@ $(function(){
 				minlength:6,
 				maxlength:6
 			},
-			/* mobile:{
+			customerName:{
+				required:true,
+				maxlength:50
+			},
+			address:{
+				required:true,
+				maxlength:250
+			},
+			mobile:{
 				required:true
-			}, */
+			},
+			mealType:{
+				required:true
+			},
+			packMethod: {
+				required:true
+			},
+			orderDays:{
+				required:true
+			},
+			startDate:{
+				required:true
+			},
+			noOfPax:{
+				required:true
+			},
 		},
 		onkeyup:false,
 		focusCleanup:true,
@@ -322,7 +344,7 @@ $(function(){
 				},
                 error: function(XmlHttpRequest, textStatus, errorThrown){
                 	console.log(textStatus, "textStatus", errorThrown);
-					layer.msg(textStatus,{icon:2,time:1000});
+					layer.msg(textStatus,{icon:2,time:5000});
 				}
 			});
 			

@@ -89,6 +89,7 @@ public class TingkatOrder implements Serializable{
 	private Integer noOfPax;
 	@Column(columnDefinition="Double DEFAULT 0")
 	private Double pricePerPax;
+	private Boolean withRice;
 	@Column(columnDefinition="Double DEFAULT 0.00")
 	private Double subTotalAmount;
 	
@@ -315,4 +316,10 @@ public class TingkatOrder implements Serializable{
 //	public void setDriverId(Integer driverId) {
 //		this.driverId = driverId;
 //	}
+	public Boolean getWithRice() {
+		return withRice;
+	}
+	public void setWithRice(Boolean withRice) {
+		this.withRice = withRice;
+	}
 }

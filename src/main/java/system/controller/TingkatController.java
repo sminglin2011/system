@@ -66,8 +66,9 @@ public class TingkatController {
 			System.out.println("参数tingkat.customer=" + tingkat.getCustomer());
 			log.debug("customer ID=" + tingkat.getCustomer().getCustomerId());
 			//Order number 为 null, 新建 TingKat Order
-			if(tingkat.getOrderNumber() == null) {
-				if (tingkat.getCustomer().getCustomerId() == null) { // new customer (there are not customer id on the add page)
+			if(tingkat.getOrderNumber() == null || tingkat.getOrderNumber().equals("")) {
+				log.debug("这个是什么 = " +tingkat.getCustomer().getCustomerId());
+				if (tingkat.getCustomer().getCustomerId() == null || tingkat.getCustomer().getCustomerId().equals("")) { // new customer (there are not customer id on the add page)
 					Customer customer = new Customer();
 					customer.setName(tingkat.getCustomerName());
 					customer.setAddress(tingkat.getAddress());
@@ -77,9 +78,11 @@ public class TingkatController {
 					customer.setMobile(tingkat.getMobile());
 					customer.setPostalCode(tingkat.getPostalCode().toString());
 					customer = customerRepository.save(customer);
+					log.debug("保存后的customer = " +customer.getCustomerId().toString());
 					tingkat.setCustomer(customer); // if there are some error come out on the saving customer, transaction will rock back
+					//执行保存customer后，如果有遇到error事务回滚
 				}
-				tingkat.setStatus(SystemConstant.ORDER_STATUS_O); //init status is O
+				tingkat.setStatus(SystemConstant.ORDER_STATUS_O); //初始化状态 status is O
 				//获取 Order Number
 				tingkat.setOrderNumber(TingKatTools.generateSequenceNo());
 			}

@@ -50,12 +50,12 @@
 			</thead>
 			<tbody>
 				<tr class="text-c" th:each="tingkat,iterStat : ${tingkatList}"> 
-				     <td><input type="checkbox" th:value="${tingkat.orderId}" name="orderId"></input></td>
+				     <td><input type="checkbox" th:value="${tingkat.orderId}" name="id"></input></td>
 				     <td th:text="${tingkat.status}">Status</td>
 				     <td th:text="${tingkat.orderNumber}">Order Number</td>
-				     <td th:text="${tingkat.orderDate}">Date</td>
+				     <td th:text="${#dates.format(tingkat.orderDate, 'yyyy-MM-dd')}">Date</td>
 				     <td th:text="${tingkat.mealType}">Meal Type</td>
-				     <td th:text="${tingkat.noOfPax}">No.Of PAX</td>
+				     <td th:text="${#numbers.formatDecimal(tingkat.noOfPax, 1, 2)}">No.Of PAX</td>
 				     <td th:text="${tingkat.orderDays}">Order Days</td>
 				     <td th:text="${tingkat.packMethod}">Pack Method</td>
 				     <td class="f-14 td-manage">
